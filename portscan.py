@@ -28,3 +28,5 @@ if __name__ == "__main__":
     ports = range(start_port, end_port + 1)
 
     scan_ports(target_ip, ports)
+~
+

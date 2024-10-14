@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'TARGET_IP', defaultValue: '127.0.0.1', description: 'Enter the target IP address')
+        string(name: 'PORT_RANGE', defaultValue: '1-1000', description: 'Enter port range (e.g., "1-1000")')
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://your-repository-url.git' // Replace with your actual repository URL
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("portscan-image:${env.BUILD_ID}")
+                }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Run the Docker container and pass environment variables
+                    def container = docker.image("portscan-image:${env.BUILD_ID}").run("-e TARGET_IP=${params.TARGET_IP} -e PORT_RANGE=${params.PORT_RANGE} -i")
+                    container.wait()
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                docker.image("portscan-image:${env.BUILD_ID}").remove()
+            }
+        }
+    }
+}
+

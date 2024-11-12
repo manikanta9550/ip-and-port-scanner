@@ -29,7 +29,7 @@ Before you begin, ensure you have met the following requirements:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/manikanta9550/Breadcrumbsip-and-port-scanner.git
+   git clone https://github.com/manikanta9550/ip-and-port-scanner.git
 
 Navigate to the project directory:
 cd your-repository

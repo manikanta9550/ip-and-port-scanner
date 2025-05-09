@@ -1,5 +1,6 @@
 import socket
 import concurrent.futures
+import sys
 
 def scan_port(ip, port):
     try:
@@ -21,8 +22,8 @@ def scan_ports(ip, ports):
         concurrent.futures.wait(futures)
 
 if __name__ == "__main__":
-    target_ip = input("Enter the target IP address: ")
-    port_range = input("Enter port range (e.g., '1-1000'): ")
+    target_ip = sys.argv[1]
+    port_range = sys.argv[2]
 
     start_port, end_port = map(int, port_range.split('-'))
     ports = range(start_port, end_port + 1)
